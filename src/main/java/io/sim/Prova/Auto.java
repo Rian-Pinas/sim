@@ -76,6 +76,7 @@ public class Auto extends Thread {
 				System.out.println("RoadID: " + (String) this.sumo.do_job_get(Vehicle.getRoadID(this.idAuto)));
 				System.out.println("RouteID: " + (String) this.sumo.do_job_get(Vehicle.getRouteID(this.idAuto)));
 				System.out.println("RouteIndex: " + this.sumo.do_job_get(Vehicle.getRouteIndex(this.idAuto)));
+				//System.out.println("Latitude: " + );
 				
 				DrivingData _repport = new DrivingData(
 

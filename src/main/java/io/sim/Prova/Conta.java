@@ -37,6 +37,18 @@ public class Conta extends Thread{
         }
     }
 
+    public double getSaldo(){
+        return this.saldo;
+    }
+
+    public void setSaldo(double saldonovo){
+        this.saldo = saldonovo;
+    }
+
+    public String getSenha(){
+        return this.senha;
+    }
+
     //Método para execução da Thread
     public void run(){
 

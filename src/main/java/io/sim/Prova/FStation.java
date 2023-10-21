@@ -6,11 +6,14 @@ public class FStation extends Thread {
     private double fuel = 5.87; //Combustível = R$5.87
     private int bombas = 2; //Bombas existentes no Posto de Gasolina
     private Conta account;
-    //Talvez um BOOL que diz se as bombas estão disponíveis ou não.
     //Cliente AlphaBank
 
+    public FStation (Conta conta){
+        this.account = conta;
+    }
+
     //Função que recebe uma quantia do motorista e retorna os litros abastecidos.
-    public synchronized double abastecer(double litros) {
+    public synchronized double abastecer(double litros, Driver driver) {
         this.bombas--;
         double cobranca = 0.0;             
         try {
@@ -20,6 +23,7 @@ public class FStation extends Thread {
 
             cobranca = litros*fuel;      //Preço cobrado: Litros abastecidos * fuel
             sleep(120000);
+            driver.getCar().setFuelTank(litros);
             this.notifyAll();
 
         } catch (InterruptedException e) {
@@ -28,6 +32,10 @@ public class FStation extends Thread {
             this.bombas++;
         }
         return cobranca;
+    }
+
+    public double getFuelPrice(){
+        return this.fuel;
     }
 
     //Método para execução da Thread

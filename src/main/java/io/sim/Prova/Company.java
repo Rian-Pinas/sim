@@ -19,11 +19,11 @@ import java.net.Proxy;
 /* Classe que trata das ações da Mobility Company */
 
 public class Company extends Thread {
-    private static ArrayList<Route> rotaDisp = new ArrayList<Route>();      //Rotas Disponíveis
-    private static ArrayList<Route> rotaExe = new ArrayList<Route>();       //Rotas em Execução
-    private static ArrayList<Route> rotaFim = new ArrayList<Route>();       //Rotas Finalizadas
-	private static BotPayment bot;
-	private static Conta conta;
+    private ArrayList<Route> rotaDisp = new ArrayList<Route>();      //Rotas Disponíveis
+    private ArrayList<Route> rotaExe = new ArrayList<Route>();       //Rotas em Execução
+    private ArrayList<Route> rotaFim = new ArrayList<Route>();       //Rotas Finalizadas
+	private BotPayment bot;
+	private Conta conta = new Conta("Mobility", "mobilidade", 999999);
     
     public Company (String caminho){    //Construtor da Company
         leRotas(caminho);
@@ -61,7 +61,26 @@ public class Company extends Thread {
 		}
     }
 
+	public Conta getConta(){
+		return this.conta;
+	}
+
+	/*public ArrayList<double> getLatLong(){
+		String[] rotas;
+		for(int i=0;i<rotaDisp.size();i++){
+			rotas = rotaDisp.get(i).getEdge().split(" ");
+		}
+		rotas
+
+		return 		
+	}*/
+
     //Método para execução da Thread
+
+	public ArrayList<Route> getRotaDisp(){
+		return this.rotaDisp;
+	}
+
     public void run(){
 
     }

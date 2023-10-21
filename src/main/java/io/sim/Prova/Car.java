@@ -1,19 +1,22 @@
 package io.sim.Prova;
 
 import de.tudresden.sumo.cmd.Vehicle;
-import it.polito.appeal.traci.SumoTraciConnection;
 
 /* Tratamentos da classe Carro */
 
 public class Car extends Vehicle implements Runnable {
-    private double FuelTank = 10;
-    private SumoTraciConnection sumo;
+    private double FuelTank;
     private String id;
     private FStation fuelstate;
+    private Auto auto;
+    private TransportService ts;
     //Cliente da Company
 
-    public Car(String ident){ //Construtor do carro
+    public Car(String ident, Auto auto, TransportService ts){ //Construtor do carro
+        this.FuelTank = 10;
         this.id = ident;
+        this.auto = auto;
+        this.ts = ts;
     }
 
     public String getID(){
@@ -23,7 +26,16 @@ public class Car extends Vehicle implements Runnable {
     public void gastaCombus(){
         //Pega o valor que está sendo gasto de gasolina
         //decrementa esse valor do FuelTank
-        //private double auxComb = (double)this.sumo.do_job_get(Vehicle.getFuelConsumption(this.id));
+        try {
+            double aux;
+            aux = (double) auto.getSumo().do_job_get(Vehicle.getFuelConsumption(this.id));
+            FuelTank -= aux;
+            if (FuelTank <= 3){
+                this.abastecer();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void abastecer(){
@@ -37,27 +49,16 @@ public class Car extends Vehicle implements Runnable {
         //via método Fuel Tank do Car.
     }
 
-    /*public void setFuelTank(double litros){
-        try{
-        this.sleep(120000); //Espera 2 minutos
-        this.FuelTank = litros; //Enche o tanque
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }*/
+    public Auto getAuto(){
+        return this.auto;
+    }
+
+    public void setFuelTank(double litros){
+        this.FuelTank += litros;
+    }
 
     //Método para execução da Thread
     public void run(){
-        while (true){
-            try {
-                synchronized(fuelstate) {
-                    while(!fuelstate.disponivel) {
-                        fuelstate.wait();
-                    }
-                    fuelstate.disponivel = false;
-                    fuelstate.notifyAll();
-                }
-            } catch (Exception e){}
-        }
+        
     }
 }

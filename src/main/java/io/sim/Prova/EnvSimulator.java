@@ -27,6 +27,10 @@ public class EnvSimulator extends Thread{
 		try {
 			sumo.runServer(1234);
 
+			for (int motorista=1;motorista<=100;motorista++){
+				
+			}
+
 			Itinerary i1 = new Itinerary("data/dados.xml", "0");
 			Company comp = new Company("data/dados.xml");
 
