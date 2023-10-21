@@ -12,7 +12,7 @@ public class Car extends Vehicle implements Runnable {
     private TransportService ts;
     //Cliente da Company
 
-    public Car(String ident, Auto auto, TransportService ts){ //Construtor do carro
+    public Car(String ident){ //Construtor do carro
         this.FuelTank = 10;
         this.id = ident;
         this.auto = auto;

@@ -8,17 +8,13 @@ import de.tudresden.sumo.cmd.Vehicle;
 
 public class Driver extends Thread{
     private Car carro;
-    private ArrayList<Route> rotas;
-    private Route exec;
-    private ArrayList<Route> rotafim;
-    private Conta conta;
+    private String idDriver;
     private BotPayment bot;
     private Client clientBank;
     
-    public Driver (Car car, ArrayList<Route> rot, BotPayment bot){ //Construtor do Motorista
+    public Driver (Car car, String idDriver){ //Construtor do Motorista
         this.carro = car;
-        this.rotas = rot;
-        this.bot = bot;
+        this.idDriver = idDriver;
     }
 
     public void abastecer(double litros, double preco){     //Abastecimento do carro.

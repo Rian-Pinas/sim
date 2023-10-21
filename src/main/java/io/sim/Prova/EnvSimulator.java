@@ -1,5 +1,6 @@
 package io.sim.Prova;
 
+import java.util.ArrayList;
 import java.io.IOException;
 
 import de.tudresden.sumo.objects.SumoColor;
@@ -27,13 +28,16 @@ public class EnvSimulator extends Thread{
 		try {
 			sumo.runServer(1234);
 
-			for (int motorista=1;motorista<=100;motorista++){
-				
-			}
+			
 
 			Itinerary i1 = new Itinerary("data/dados.xml", "0");
 			ABank banco = new ABank(6000);
 			Company comp = new Company("data/dados.xml", 5000);
+
+			ArrayList<Driver> motoristas = new ArrayList<Driver>();
+			for (Integer motorista=0;motorista<100;motorista++){
+				Car carro = new Car("car"+motorista.toString(),  )
+			}
 
 			if (i1.isOn()) {
 				
