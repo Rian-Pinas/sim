@@ -18,16 +18,28 @@ import java.net.Proxy;
 
 /* Classe que trata das ações da Mobility Company */
 
-public class Company extends Thread {
+public class Company extends Service {
     private ArrayList<Route> rotaDisp = new ArrayList<Route>();      //Rotas Disponíveis
-    private ArrayList<Route> rotaExe = new ArrayList<Route>();       //Rotas em Execução
-    private ArrayList<Route> rotaFim = new ArrayList<Route>();       //Rotas Finalizadas
-	private BotPayment bot;
 	private Conta conta = new Conta("Mobility", "mobilidade", 999999);
-    
-    public Company (String caminho){    //Construtor da Company
-        leRotas(caminho);
+    private Client clientBank;
+	private String caminho;
+
+    public Company (String caminho, int port){    //Construtor da Company
+        super(port);
+		this.caminho = caminho;
     }
+
+	@Override
+	public Server CreateServerThread(Socket conn){
+		return new CompanyServer(conn);
+	}
+
+	@Override
+	public void run(){
+		leRotas(caminho);
+		clientBank = new Client("127.0.0.1", 6000);
+		super.run();
+	}
 
     private void leRotas(String caminho){
         try {
@@ -81,9 +93,15 @@ public class Company extends Thread {
 		return this.rotaDisp;
 	}
 
-    public void run(){
+	public class CompanyServer extends Server {
+        public CompanyServer(Socket conn) {
+            super(conn);
+        }
 
+        @Override
+        protected void ProcessMessage(String message) {
+            System.out.println("[company] received: " + message);
+        }
     }
-
 
 }

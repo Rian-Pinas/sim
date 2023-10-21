@@ -5,11 +5,11 @@ package io.sim.Prova;
 public class FStation extends Thread {
     private double fuel = 5.87; //Combustível = R$5.87
     private int bombas = 2; //Bombas existentes no Posto de Gasolina
-    private Conta account;
+    private Client clientBank;
     //Cliente AlphaBank
 
-    public FStation (Conta conta){
-        this.account = conta;
+    public FStation (){
+
     }
 
     //Função que recebe uma quantia do motorista e retorna os litros abastecidos.

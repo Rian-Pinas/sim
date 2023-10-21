@@ -32,7 +32,8 @@ public class EnvSimulator extends Thread{
 			}
 
 			Itinerary i1 = new Itinerary("data/dados.xml", "0");
-			Company comp = new Company("data/dados.xml");
+			ABank banco = new ABank(6000);
+			Company comp = new Company("data/dados.xml", 5000);
 
 			if (i1.isOn()) {
 				

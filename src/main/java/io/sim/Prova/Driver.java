@@ -13,6 +13,7 @@ public class Driver extends Thread{
     private ArrayList<Route> rotafim;
     private Conta conta;
     private BotPayment bot;
+    private Client clientBank;
     
     public Driver (Car car, ArrayList<Route> rot, BotPayment bot){ //Construtor do Motorista
         this.carro = car;
