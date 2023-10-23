@@ -33,10 +33,6 @@ public class Driver extends Thread{
         return this.carro;
     }
 
-    public Conta getConta(){
-        return this.conta;
-    }
-
     //Método para execução da Thread
     public void run(){
 

@@ -34,9 +34,22 @@ public class EnvSimulator extends Thread{
 			ABank banco = new ABank(6000);
 			Company comp = new Company("data/dados.xml", 5000);
 
-			ArrayList<Driver> motoristas = new ArrayList<Driver>();
-			for (Integer motorista=0;motorista<100;motorista++){
-				Car carro = new Car("car"+motorista.toString(),  )
+			ArrayList<Car> carros = new ArrayList<Car>();
+			for (Integer motorista=0;motorista<12;motorista++){
+				Itinerary iti = new Itinerary("data/dados.xml", motorista.toString());
+				if (iti.isOn()){
+				int fuelType = 2;
+				int fuelPreferential = 2;
+				double fuelPrice = 5.87;
+				int personCapacity = 1;
+				int personNumber = 1;
+				SumoColor green = new SumoColor(0, 255, 0, 126);
+				Auto auto = new Auto(true, ("CAR" + motorista.toString()), green,("D" + motorista.toString()), sumo, 500, fuelType, fuelPreferential, fuelPrice, personCapacity, personNumber);
+				TransportService transServ = new TransportService(true, ("CAR"+motorista.toString()), iti, auto, sumo);
+				Car car = new Car(motorista.toString(), auto, transServ);
+				Thread thread = new Thread(car);
+				thread.run();
+				}
 			}
 
 			if (i1.isOn()) {

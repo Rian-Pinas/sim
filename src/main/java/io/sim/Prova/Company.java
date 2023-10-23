@@ -27,6 +27,7 @@ public class Company extends Service {
     public Company (String caminho, int port){    //Construtor da Company
         super(port);
 		this.caminho = caminho;
+		this.leRotas(caminho);
     }
 
 	@Override
