@@ -10,16 +10,12 @@ public class TransportService extends Thread {
 	private String idTransportService;
 	private boolean on_off;
 	private SumoTraciConnection sumo;
-	private Auto auto;
-	private Itinerary itinerary;
+	private Car car;
 
-	public TransportService(boolean _on_off, String _idTransportService, Itinerary _itinerary, Auto _auto,
-			SumoTraciConnection _sumo) {
-
+	public TransportService(boolean _on_off, String _idTransportService, Car _car, SumoTraciConnection _sumo) {
 		this.on_off = _on_off;
 		this.idTransportService = _idTransportService;
-		this.itinerary = _itinerary;
-		this.auto = _auto;
+		this.car = _car;
 		this.sumo = _sumo;
 	}
 
@@ -29,14 +25,8 @@ public class TransportService extends Thread {
 			
 			this.initializeRoutes();
 
-			this.auto.start();
-
 			while (this.on_off) {
-				try {
-					this.sumo.do_timestep();
-				} catch (Exception e) {
-				}
-				Thread.sleep(this.auto.getAcquisitionRate());
+				Thread.sleep(this.car.getAcquisitionRate());
 				if (this.getSumo().isClosed()) {
 					this.on_off = false;
 					System.out.println("SUMO is closed...");
@@ -49,22 +39,22 @@ public class TransportService extends Thread {
 	}
 
 	private void initializeRoutes() {
-
+		System.out.println("Initializing routes... car " + this.car.getId() + " route " + this.car.getRoute().getId());
 		SumoStringList edge = new SumoStringList();
 		edge.clear();
-		String[] aux = this.itinerary.getItinerary();
+		String aux = this.car.getRoute().getEdge();
 
-		for (String e : aux[1].split(" ")) {
+		for (String e : aux.split(" ")) {
 			edge.add(e);
 		}
 
 		try {
-			sumo.do_job_set(Route.add(this.itinerary.getIdItinerary(), edge));
+			sumo.do_job_set(Route.add(this.car.getRoute().getId(), edge));
 			//sumo.do_job_set(Vehicle.add(this.auto.getIdAuto(), "DEFAULT_VEHTYPE", this.itinerary.getIdItinerary(), 0,
 			//		0.0, 0, (byte) 0));
 			
-			sumo.do_job_set(Vehicle.addFull(this.auto.getIdAuto(), 				//vehID
-											this.itinerary.getIdItinerary(), 	//routeID 
+			sumo.do_job_set(Vehicle.addFull(this.car.getId(), 				//vehID
+											this.car.getRoute().getId(), 	//routeID 
 											"DEFAULT_VEHTYPE", 					//typeID 
 											"now", 								//depart  
 											"0", 								//departLane 
@@ -76,12 +66,11 @@ public class TransportService extends Thread {
 											"",									//fromTaz 
 											"",									//toTaz 
 											"", 								//line 
-											this.auto.getPersonCapacity(),		//personCapacity 
-											this.auto.getPersonNumber())		//personNumber
+											this.car.getPersonCapacity(),		//personCapacity 
+											this.car.getPersonNumber())		//personNumber
 					);
 			
-			sumo.do_job_set(Vehicle.setColor(this.auto.getIdAuto(), this.auto.getColorAuto()));
-			
+			sumo.do_job_set(Vehicle.setColor(this.car.getId(), this.car.getColor()));
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
@@ -101,13 +90,5 @@ public class TransportService extends Thread {
 
 	public SumoTraciConnection getSumo() {
 		return this.sumo;
-	}
-
-	public Auto getAuto() {
-		return this.auto;
-	}
-
-	public Itinerary getItinerary() {
-		return this.itinerary;
 	}
 }

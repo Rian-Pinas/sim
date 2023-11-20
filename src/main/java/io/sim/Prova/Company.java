@@ -14,12 +14,12 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import java.net.Proxy;
-
 /* Classe que trata das ações da Mobility Company */
 
 public class Company extends Service {
-    private ArrayList<Route> rotaDisp = new ArrayList<Route>();      //Rotas Disponíveis
+    private ArrayList<Route> rotaDisp = new ArrayList<Route>();      //Rotas Disponíveis   
+	 private ArrayList<Route> rotaExec = new ArrayList<Route>();      //Rotas executando
+
 	private Conta conta = new Conta("Mobility", "mobilidade", 999999);
     private Client clientBank;
 	private String caminho;
@@ -57,7 +57,7 @@ public class Company extends Service {
                     String auxEdge = edges.getAttribute("edges");             //Obtém as edges,
                     String idVehic = elem.getAttribute("id");                 //Obtém as ids e
                     rotaDisp.add(new Route(idVehic, auxEdge));                     //Gera as rotas
-                    System.out.println(idVehic + " " + auxEdge);                   //Para finalmente adicionar nas rotas disponiveis
+                    //System.out.println(idVehic + " " + auxEdge);                   //Para finalmente adicionar nas rotas disponiveis
 				}
 			}
 
@@ -74,21 +74,16 @@ public class Company extends Service {
 		}
     }
 
+	public Route getNextRoute() {
+		Route _rota = this.rotaDisp.get(0);
+		this.rotaDisp.remove(0);
+		this.rotaExec.add(_rota);
+		return _rota;
+	}
+
 	public Conta getConta(){
 		return this.conta;
 	}
-
-	/*public ArrayList<double> getLatLong(){
-		String[] rotas;
-		for(int i=0;i<rotaDisp.size();i++){
-			rotas = rotaDisp.get(i).getEdge().split(" ");
-		}
-		rotas
-
-		return 		
-	}*/
-
-    //Método para execução da Thread
 
 	public ArrayList<Route> getRotaDisp(){
 		return this.rotaDisp;

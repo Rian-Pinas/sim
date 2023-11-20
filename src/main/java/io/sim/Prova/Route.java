@@ -7,10 +7,12 @@ package io.sim.Prova;
 public class Route {
     private String id;
     private String edge;
+    private String[] edgeList;
 
     public Route(String ident, String routes){
         this.id = ident;
         this.edge = routes;
+        edgeList = null;
     }
 
     public String getId(){
@@ -19,6 +21,14 @@ public class Route {
 
     public String getEdge(){
         return edge;
+    }
+
+    public Boolean isEnded(String _edge) {
+        if (edgeList == null)
+            edgeList = this.edge.split(" ");
+
+        return edgeList[edgeList.length - 1].equals(_edge);
+
     }
 
     @Override
