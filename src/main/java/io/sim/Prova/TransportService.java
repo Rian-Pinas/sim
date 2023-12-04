@@ -50,9 +50,7 @@ public class TransportService extends Thread {
 
 		try {
 			sumo.do_job_set(Route.add(this.car.getRoute().getId(), edge));
-			//sumo.do_job_set(Vehicle.add(this.auto.getIdAuto(), "DEFAULT_VEHTYPE", this.itinerary.getIdItinerary(), 0,
-			//		0.0, 0, (byte) 0));
-			
+
 			sumo.do_job_set(Vehicle.addFull(this.car.getId(), 				//vehID
 											this.car.getRoute().getId(), 	//routeID 
 											"DEFAULT_VEHTYPE", 					//typeID 

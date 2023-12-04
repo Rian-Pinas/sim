@@ -160,7 +160,7 @@ public class Auto extends Thread {
 				
 				
 				sumo.do_job_set(Vehicle.setSpeedMode(this.idAuto, 0));
-				sumo.do_job_set(Vehicle.setSpeed(this.idAuto, 6.95));
+				sumo.do_job_set(Vehicle.setSpeed(this.idAuto, 10.95));
 
 				
 				System.out.println("getPersonNumber = " + sumo.do_job_get(Vehicle.getPersonNumber(this.idAuto)));

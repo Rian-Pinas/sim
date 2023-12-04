@@ -33,7 +33,7 @@ public class EnvSimulator extends Thread{
 			
 
 			ABank banco = new ABank(6000);
-			Company comp = new Company("data/dados.xml", 5000);
+			Company comp = new Company("data/dados2.xml", 5000);
 			comp.start();
 			banco.start();
 			Thread.sleep(5000);
@@ -46,10 +46,10 @@ public class EnvSimulator extends Thread{
 			Random rand = new Random();
 
 			ArrayList<Car> carros = new ArrayList<Car>();
-			for (Integer motorista=0; motorista<12; motorista++){
+			for (Integer motorista=0; motorista<1; motorista++){
 				System.out.println("Created car");
 				Route _rota = comp.getNextRoute();
-				SumoColor _color = new SumoColor(0, rand.nextInt(255), rand.nextInt(255), rand.nextInt(255));
+				SumoColor _color = new SumoColor(rand.nextInt(255)+100, rand.nextInt(255)+100, rand.nextInt(255)+100, 255);
 				Car _car = new Car("CAR" + motorista.toString(), _rota , sumo, _color, 500, personCapacity, personNumber);
 				carros.add(_car);
 			}
@@ -62,11 +62,13 @@ public class EnvSimulator extends Thread{
 			while (true) {
 				try {
 					this.sumo.do_timestep();
-					Thread.sleep(500);
+					Thread.sleep(100);
 				} catch (Exception e) {
 
 				}
 			}
+
+			
 		
 		} catch (IOException e1) {
 			e1.printStackTrace();
